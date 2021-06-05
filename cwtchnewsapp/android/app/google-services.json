@@ -1,0 +1,40 @@
+{
+    "project_info": {
+        "project_number": "350416576934",
+        "project_id": "cwtch-news",
+        "storage_bucket": "cwtch-news.appspot.com"
+    },
+    "client": [{
+        "client_info": {
+            "mobilesdk_app_id": "1:350416576934:android:58dae2614abfa7d60baf67",
+            "android_client_info": {
+                "package_name": "com.cwtchnewsapp"
+            }
+        },
+        "oauth_client": [{
+                "client_id": "350416576934-l73d1srq886knfpha8drmcj391v6679c.apps.googleusercontent.com",
+                "client_type": 1,
+                "android_info": {
+                    "package_name": "com.cwtchnewsapp",
+                    "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+                }
+            },
+            {
+                "client_id": "350416576934-3qnqa9niinbaikun27jg1vid04kj21c1.apps.googleusercontent.com",
+                "client_type": 3
+            }
+        ],
+        "api_key": [{
+            "current_key": "AIzaSyCK_qt5tZ96nVhR_rNwcM2PfIbN2ehhCmk"
+        }],
+        "services": {
+            "appinvite_service": {
+                "other_platform_oauth_client": [{
+                    "client_id": "350416576934-3qnqa9niinbaikun27jg1vid04kj21c1.apps.googleusercontent.com",
+                    "client_type": 3
+                }]
+            }
+        }
+    }],
+    "configuration_version": "1"
+}
