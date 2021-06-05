@@ -1,5 +1,3 @@
-
-
 import React,{useEffect,useState} from 'react';
 
 import {
@@ -11,20 +9,68 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
+import {useDispatch, connect} from 'react-redux'
 import {
   GoogleSignin,
   GoogleSigninButton,
   statusCodes,
 } from '@react-native-google-signin/google-signin';
+import auth from '@react-native-firebase/auth';
+
+import {NavigationContainer} from '@react-navigation/native'
+import {createStackNavigator} from '@react-navigation/stack'
+
+
+import { SET_USER,IS_AUTHTHENTICATED } from './action/action.types';
+import Login from './screen/Login';
+import Home from './screen/Home'
+
+const Stack = createStackNavigator();
 
 const App = () => {
+
+  const [isUserGLogin, setisUserGLogin] = useState(false);
+  const [userGData, setuserGData] = useState('');
+  // const dispatch = useDispatch();
+
+  const isSignedIn = async () => {
+    const isSignedIn = await GoogleSignin.isSignedIn();
+    setisUserGLogin(isSignedIn);
+    if(isSignedIn){
+      getCurrentUserInfo()
+    }
+    else if(isSignedIn === false){
+      // TODO Take User to Login page
+      
+
+    }
+    // this.setState({ isLoginScreenPresented: !isSignedIn });
+  };
+
   const [user, setuser] = useState('');
   useEffect(() => {
+    isSignedIn()
     GoogleSignin.configure({
       webClientId: '350416576934-3qnqa9niinbaikun27jg1vid04kj21c1.apps.googleusercontent.com',
     });
   }, [])
   
+
+const getCurrentUserInfo = async () => {
+  try {
+    const userInfo = await GoogleSignin.signInSilently();
+    setuserGData({userInfo});
+    console.log(userInfo);
+  } catch (error) {
+    if (error.code === statusCodes.SIGN_IN_REQUIRED) {
+      // user has not signed in yet
+    } else {
+      // some other error
+    }
+  }
+};
+
+
   const signIn = async () => {
     try {
       await GoogleSignin.hasPlayServices();
@@ -65,31 +111,27 @@ const App = () => {
 
 
   return (
-    <SafeAreaView>
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-    >
-          <View>
-            {user ? (
-              <Text>
-                {user.idToken}
-                {user.user}
+      <>
+      <NavigationContainer>
+          <Stack.Navigator>
+            {userGData && isUserGLogin ? (
+              <Stack.Screen
+                name="home"
+                component={Home}
+              />
 
-                </Text>
             ) : (
-              null
+            <>
+            <Stack.Screen
+              name="Login" component={Login}
+            />
+            </>
             )
 
             }
-            <Text>
-              Hello here   {user.idToken}
-            </Text>
-            <GoogleSigninButton onPress={signIn}/>
-            {/* <GoogleSigninButton onPress={signOut}/> */}
-
-          </View>
-      </ScrollView>
-    </SafeAreaView>
+          </Stack.Navigator>
+      </NavigationContainer>
+      </>
   );
 };
 

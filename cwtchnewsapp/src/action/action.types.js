@@ -1,0 +1,2 @@
+export const IS_AUTHTHENTICATED = 'IS_AUTHTHENTICATED'
+export const SET_USER = 'SET_USER'
