@@ -57,16 +57,25 @@ const App = ({authState}) => {
 
   function onAuthStateChanged(user) {
     console.log("USER -> ",user)
-    dispatch({
-      type: IS_AUTHTHENTICATED,
-      payload: true
-    })
     if(user){
       dispatch({
-        type: SET_USER,
-        payload: user,
+        type: IS_AUTHTHENTICATED,
+        payload: true
+      })
+      if(user){
+        dispatch({
+          type: SET_USER,
+          payload: user,
+        })
+      }
+    }else{
+      dispatch({
+        type: IS_AUTHTHENTICATED,
+        payload: false
       })
     }
+    
+  
 
   }
 

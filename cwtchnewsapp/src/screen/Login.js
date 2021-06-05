@@ -62,7 +62,7 @@ import {
       return(
         <View>
             <Text>
-                Hi
+            SignIn page
             </Text>
             <GoogleSigninButton onPress={() => googleSignIn()}/>
         </View>

@@ -61,18 +61,21 @@ export const googleSignIn = () => async(dispatch) => {
 }
 
 export const googleSignout = () => async(dispatch) => {
+    console.log("Logout clicked")
     try {
-        await GoogleSignin.revokeAccess();
-        await GoogleSignin.signOut();
+        GoogleSignin.revokeAccess();
+        GoogleSignin.signOut();
         console.log("Yes");
+        firebase.auth().signOut().then(
+            Snackbar.show({
+                text: 'Signout sucess',
+                textColor: 'white',
+                backgroundColor: 'green'
+            })
+        )
 
-
-        Snackbar.show({
-            text: 'Signout sucess',
-            textColor: 'white',
-            backgroundColor: 'green'
-        })
     } catch (error) {
+        console.log(error)
 
     }
 }

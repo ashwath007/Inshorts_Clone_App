@@ -28,22 +28,22 @@ const Home = ({googleSignout}) => {
   
 
 
-      // const signOut = async () => {
-      //   console.log('Signingout');
+      const signOut = async () => {
+        console.log('Signingout');
 
-      //   try {
-      //     await GoogleSignin.revokeAccess();
-      //     await GoogleSignin.signOut();
-      //     console.log('Signingout');
-      //      // Remember to remove the user from your app's state as well
-      //   } catch (error) {
-      //     console.error(error);
-      //   }
-      // };
+        try {
+          await GoogleSignin.revokeAccess();
+          await GoogleSignin.signOut();
+          console.log('Signingout');
+           // Remember to remove the user from your app's state as well
+        } catch (error) {
+          console.error(error);
+        }
+      };
     return(
         <View>
             <Text>
-                Home Page
+                Home Page Logout
             </Text>
 
             <GoogleSigninButton onPress={() => googleSignout()}/>
