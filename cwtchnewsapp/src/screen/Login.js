@@ -1,5 +1,6 @@
 import React,{useEffect,useState} from 'react';
-
+import { connect} from 'react-redux'
+import propTypes from 'prop-types'
 import {
     SafeAreaView,
     ScrollView,
@@ -17,7 +18,10 @@ import {
   } from '@react-native-google-signin/google-signin';
 
 
-  const Login = () => {
+  import {googleSignIn} from "../action/auth"
+
+  const Login = ({googleSignIn,authState}) => {
+    console.log(googleSignIn)
 
     const [user, setuser] = useState('');
 
@@ -60,7 +64,7 @@ import {
             <Text>
                 Hi
             </Text>
-            <GoogleSigninButton onPress={signIn}/>
+            <GoogleSigninButton onPress={() => googleSignIn()}/>
         </View>
       )
   }
@@ -68,6 +72,12 @@ import {
 const styles = new StyleSheet.create({
 
 })
+const mapDispatchToProps = {
+  googleSignIn
+}
 
-
-  export default Login;
+Login.prototypes = {
+  googleSignIn: propTypes.func.isRequired,
+  authState: propTypes.object.isRequired
+}
+export default connect(null, mapDispatchToProps )(Login);

@@ -27,33 +27,71 @@ import Home from './screen/Home'
 
 const Stack = createStackNavigator();
 
-const App = () => {
+GoogleSignin.configure({
+  webClientId: '350416576934-3qnqa9niinbaikun27jg1vid04kj21c1.apps.googleusercontent.com',
+});
+const App = ({authState}) => {
+
+  const dispatch = useDispatch();
+
+
 
   const [isUserGLogin, setisUserGLogin] = useState(false);
   const [userGData, setuserGData] = useState('');
-  // const dispatch = useDispatch();
+  const [user, setuser] = useState('');
+
+
+  // useEffect(() => { // Google Auth
+  //   isSignedIn()
+
+  // }, [])
+
+
+  useEffect(() => { // Normal Auth
+    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+    return subscriber; // unsubscribe on unmount
+  }, []);
+
+
+
+
+  function onAuthStateChanged(user) {
+    console.log("USER -> ",user)
+    dispatch({
+      type: IS_AUTHTHENTICATED,
+      payload: true
+    })
+    if(user){
+      dispatch({
+        type: SET_USER,
+        payload: user,
+      })
+    }
+
+  }
 
   const isSignedIn = async () => {
     const isSignedIn = await GoogleSignin.isSignedIn();
     setisUserGLogin(isSignedIn);
     if(isSignedIn){
+      dispatch({
+        type: IS_AUTHTHENTICATED,
+        payload: true
+      })
       getCurrentUserInfo()
     }
     else if(isSignedIn === false){
-      // TODO Take User to Login page
-      
-
+      dispatch({
+        type: IS_AUTHTHENTICATED,
+        payload: false
+      })
     }
+    
     // this.setState({ isLoginScreenPresented: !isSignedIn });
   };
 
-  const [user, setuser] = useState('');
-  useEffect(() => {
-    isSignedIn()
-    GoogleSignin.configure({
-      webClientId: '350416576934-3qnqa9niinbaikun27jg1vid04kj21c1.apps.googleusercontent.com',
-    });
-  }, [])
+  
+ 
   
 
 const getCurrentUserInfo = async () => {
@@ -61,12 +99,15 @@ const getCurrentUserInfo = async () => {
     const userInfo = await GoogleSignin.signInSilently();
     setuserGData({userInfo});
     console.log(userInfo);
+    dispatch({
+      type: SET_USER,
+      payload: userInfo,
+    })
   } catch (error) {
-    if (error.code === statusCodes.SIGN_IN_REQUIRED) {
-      // user has not signed in yet
-    } else {
-      // some other error
-    }
+    dispatch({
+      type: SET_USER,
+      payload: null
+    })
   }
 };
 
@@ -99,22 +140,17 @@ const getCurrentUserInfo = async () => {
     }
   };
 
-  const signOut = async () => {
-    try {
-      await GoogleSignin.revokeAccess();
-      await GoogleSignin.signOut();
-      setuser(''); // Remember to remove the user from your app's state as well
-    } catch (error) {
-      console.error(error);
-    }
-  };
+
+
+
 
 
   return (
       <>
       <NavigationContainer>
           <Stack.Navigator>
-            {userGData && isUserGLogin ? (
+            {console.log(authState)}
+            {authState.isAuthenticated  ? (
               <Stack.Screen
                 name="home"
                 component={Home}
@@ -154,4 +190,11 @@ const styles = StyleSheet.create({
   },
 });
 
-export default App;
+
+
+const mapStateToProps = (state) => ({
+  authState: state.auth
+})
+
+export default connect(mapStateToProps)(App)
+

@@ -1,12 +1,24 @@
 import React,{useEffect,useState} from 'react';
-import { StyleSheet,View,Text,TouchableOpacity } from 'react-native';
+import { connect} from 'react-redux'
+import propTypes from 'prop-types'
+import {
+  SafeAreaView,
+  ScrollView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  useColorScheme,
+  View,
+} from 'react-native';
 import {
     GoogleSignin,
     GoogleSigninButton,
     statusCodes,
   } from '@react-native-google-signin/google-signin';
 
-const Home = () => {
+import {googleSignout} from '../action/auth'
+
+const Home = ({googleSignout}) => {
     useEffect(() => {
 
         GoogleSignin.configure({
@@ -16,28 +28,37 @@ const Home = () => {
   
 
 
-      const signOut = async () => {
-        console.log('Signingout');
+      // const signOut = async () => {
+      //   console.log('Signingout');
 
-        try {
-          await GoogleSignin.revokeAccess();
-          await GoogleSignin.signOut();
-          console.log('Signingout');
-           // Remember to remove the user from your app's state as well
-        } catch (error) {
-          console.error(error);
-        }
-      };
+      //   try {
+      //     await GoogleSignin.revokeAccess();
+      //     await GoogleSignin.signOut();
+      //     console.log('Signingout');
+      //      // Remember to remove the user from your app's state as well
+      //   } catch (error) {
+      //     console.error(error);
+      //   }
+      // };
     return(
         <View>
             <Text>
                 Home Page
             </Text>
 
-            <GoogleSigninButton onPress={signOut}/>
+            <GoogleSigninButton onPress={() => googleSignout()}/>
 
         </View>
     )
 }
 
-export default Home;
+
+const mapDispatchToProps = {
+  googleSignout
+}
+
+Home.propTypes = ({
+  googleSignout: propTypes.func.isRequired
+})
+
+export default connect(null, mapDispatchToProps)(Home);

@@ -6,10 +6,10 @@ import App from './App';
 
 const RootApp = () => {
     return(
-        // <Provider store={store}>
-        //     <App/>
-        // </Provider>
-        <App/>
+        <Provider store={store}>
+            <App/>
+        </Provider>
+  
     )
 }
 
