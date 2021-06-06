@@ -25,11 +25,23 @@ import { SET_USER,IS_AUTHTHENTICATED } from './action/action.types';
 import Login from './screen/Login';
 import Home from './screen/Home'
 
+// TODO SplashScreen design and building
+import Splash from './screen/SplashScreen/Splash';
+
 const Stack = createStackNavigator();
 
 GoogleSignin.configure({
   webClientId: '350416576934-3qnqa9niinbaikun27jg1vid04kj21c1.apps.googleusercontent.com',
 });
+
+// All Screens
+
+import HomePageNavigation from './screen/Navigation/HomePageNavigation';
+//
+
+
+
+
 const App = ({authState}) => {
 
   const dispatch = useDispatch();
@@ -150,7 +162,9 @@ const getCurrentUserInfo = async () => {
   };
 
 
-
+  if(authState.loading){
+    return <Splash/>
+  }
 
 
 
@@ -162,7 +176,7 @@ const getCurrentUserInfo = async () => {
             {authState.isAuthenticated  ? (
               <Stack.Screen
                 name="home"
-                component={Home}
+                component={HomePageNavigation}
               />
 
             ) : (
