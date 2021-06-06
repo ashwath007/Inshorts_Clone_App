@@ -6,6 +6,7 @@ import {
   ScrollView,
   StatusBar,
   StyleSheet,
+  TouchableOpacity,
   Text,
   useColorScheme,
   View,
@@ -47,7 +48,13 @@ const Home = ({googleSignout}) => {
             </Text>
 
             <GoogleSigninButton onPress={() => googleSignout()}/>
-
+            <View>
+              <TouchableOpacity style={{backgroundColor:'blue'}}>
+                <Text style={{color:'white',padding:30}}>
+                  Phone Signout
+                </Text>
+              </TouchableOpacity>
+            </View>
         </View>
     )
 }

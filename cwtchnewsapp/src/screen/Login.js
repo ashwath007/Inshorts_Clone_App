@@ -6,8 +6,11 @@ import {
     ScrollView,
     StatusBar,
     StyleSheet,
+    TextInput,
     Text,
+    Button,
     useColorScheme,
+    TouchableOpacity,
     View,
   } from 'react-native';
 
@@ -18,12 +21,17 @@ import {
   } from '@react-native-google-signin/google-signin';
 
 
-  import {googleSignIn} from "../action/auth"
+  import {googleSignIn,phoneSignIn,verifyPhone} from "../action/auth"
 
-  const Login = ({googleSignIn,authState}) => {
-    console.log(googleSignIn)
-
+  const Login = ({googleSignIn,authState,phoneSignIn,verifyPhone}) => {
+    
     const [user, setuser] = useState('');
+    const [phone, setphone] = useState('');
+    const [code, setcode] = useState('');
+
+    const [confirm, setconfirm] = useState(null);
+
+    const [isSent, setisSent] = useState(false);
 
     const signIn = async () => {
         try {
@@ -59,25 +67,82 @@ import {
       }, [])
 
 
-      return(
-        <View>
-            <Text>
-            SignIn page
-            </Text>
-            <GoogleSigninButton onPress={() => googleSignIn()}/>
-        </View>
-      )
+      const doPhoneSignin = async() => {
+        console.log("Phone -> ",phone);
+          if(phone){
+           let res =  await phoneSignIn({phone})
+           console.log('res => ',res);
+
+           if(res){
+            setconfirm(res)
+            setisSent(true)
+              console.log(res);
+
+           }
+          }
+      }
+      const doVerifyPhone = async() => {
+        console.log(code);
+        verifyPhone({code,confirm});
+        }
+
+      if(isSent){
+        return(
+          <View>
+            <TextInput placeholder="Enter the code" onChangeText={(txt) => setcode(txt)} defaultValue={code}/>
+                <TouchableOpacity onPress={doVerifyPhone}>
+                  <Text>
+                    Verify
+                  </Text>
+                </TouchableOpacity>
+          </View>
+        )
+      }else{
+        return(
+      
+          <View>
+              <Text>
+              SignIn page
+              </Text>
+              <GoogleSigninButton onPress={() => googleSignIn()}/>
+              <View style={{marginTop:50}}>
+                  <TextInput placeholder="Enter the phone number" style={{height:40}} onChangeText={(t) => setphone(t)} defaultValue={phone}/>
+                  <TouchableOpacity onPress={doPhoneSignin} style={{backgroundColor:'purple',padding:20}}>
+                    <Text style={{color:'white'}}>
+                      Send
+                    </Text>
+                  </TouchableOpacity>
+              </View>
+          </View>
+        )
+      }
+
+       
+  
+        
+      
+     
   }
 
 const styles = new StyleSheet.create({
 
 })
 const mapDispatchToProps = {
-  googleSignIn
+  googleSignIn,
+  phoneSignIn: (data) => phoneSignIn(data),
+  verifyPhone: (data) => verifyPhone(data),
 }
+
+
+const mapStateToProps = (state) => ({
+  authState: state.auth
+})
 
 Login.prototypes = {
   googleSignIn: propTypes.func.isRequired,
-  authState: propTypes.object.isRequired
+  phoneSignIn: propTypes.func.isRequired,
+  authState: propTypes.object.isRequired,
+  verifyPhone: propTypes.func.isRequired
+  
 }
-export default connect(null, mapDispatchToProps )(Login);
+export default connect(mapStateToProps, mapDispatchToProps )(Login);
