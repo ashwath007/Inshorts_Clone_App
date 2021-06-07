@@ -14,13 +14,25 @@ const HomePageNavigation = () => {
             <>
 
 <Tab.Navigator
-
 initialRouteName="News"
+tabBarOptions={{
+style:{backgroundColor:'red'},
+showIcon :true,
+      }}
 
 >
-      <Tab.Screen name="Home" component={Home} />
-      <Tab.Screen name="News" component={News} />
-      <Tab.Screen name="ViewNews" component={ViewNews} />
+      <Tab.Screen name="Home" component={Home} 
+      
+      title="Home"
+      />
+      <Tab.Screen name="News" component={News}
+      title="Fast News"
+      
+      />
+      <Tab.Screen name="Live" component={ViewNews}
+      title="Live News"
+      
+      />
 
     </Tab.Navigator>
             </>

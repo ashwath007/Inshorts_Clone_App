@@ -176,12 +176,14 @@ const getCurrentUserInfo = async () => {
             {authState.isAuthenticated  ? (
               <Stack.Screen
                 name="home"
+                options={{headerShown: false}}
                 component={HomePageNavigation}
               />
 
             ) : (
             <>
             <Stack.Screen
+            options={{headerShown: false}}
               name="Login" component={Login}
             />
             </>
