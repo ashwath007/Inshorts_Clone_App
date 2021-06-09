@@ -4,6 +4,7 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 
 import Home from '../Home';
 import NewsPageNavigation from '../Navigation/NewsPageNavigation';
+import HomeMenuNavigation from './HomeMenuNavigation';
 import ViewNews from '../ViewNews';
 
 
@@ -29,7 +30,7 @@ showIcon :true,
       }}
 
 >
-      <Tab.Screen name="Home" component={Home} 
+      <Tab.Screen name="Home" component={HomeMenuNavigation} 
       
       title="Home"
       />
