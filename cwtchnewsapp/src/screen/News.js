@@ -1,8 +1,10 @@
-import React, { Component,useState } from 'react';
+import React, { Component,useState,useEffect} from 'react';
 import { Image,StyleSheet, Dimensions,
     TouchableOpacity,
     Animated,
+    BackHandler,
     PanResponder,} from 'react-native';
+    import { WebView } from 'react-native-webview';
 
 // import { Container, Header, View, Button, Icon, Fab } from 'native-base';
 import { Container, Header, DeckSwiper, Card, CardItem,View, Fab,Thumbnail, Text, Left, Body, Icon,Button } from 'native-base';
@@ -14,12 +16,30 @@ const SCREEN_HEIGHT = Dimensions.get("window").height;
 import NewsCards from './Components/NewsCards';
 import WebViews from './Components/WebView';
 
-const News = () => {
+const News = ({navigation}) => {
+
+    useEffect(() => {
+        const backAction = () => {
+          setactive(false)
+        };
+    
+        const backHandler = BackHandler.addEventListener(
+          "hardwareBackPress",
+          backAction
+        );
+    
+        return () => backHandler.remove();
+      }, []);
+    
+
+
     // News Feeds
     const [indexAt, setindexAt] = useState(0);
 
     // FABs Active
     const [active, setactive] = useState(false);
+    const [active1, setactive1] = useState(false);
+
 
 
     // WebView 
@@ -50,11 +70,25 @@ const News = () => {
             )
       }
 
-
+      const setactive1Btn = () => {
+        setopenweb(false)
+      }
       if(openweb){
         return(
-            <WebViews/>
-            )
+            <View style={{flex:1}}>
+                <WebView source={{ uri: 'https://reactnative.dev/' }} />
+                <Fab
+                active={true}
+                direction="up"
+                containerStyle={{ }}
+                style={{ backgroundColor: '#5067FF' }}
+                position="bottomRight"
+                onPress={() => setactive1Btn( )}>
+                <Icon name="back" />
+                
+              </Fab>
+            </View>
+        )
       
       }
       else{
@@ -89,8 +123,8 @@ const News = () => {
                 containerStyle={{ }}
                 style={{ backgroundColor: '#5067FF' }}
                 position="bottomRight"
-                onPress={() => setactive(!active )}>
-                <Icon name="share" />
+                onPress={() => setactive(!actopenwebive )}>
+                <Icon name="back" />
                 <Button style={{ backgroundColor: '#34A34F' }}>
                   <Icon name="logo-whatsapp" />
                 </Button>
