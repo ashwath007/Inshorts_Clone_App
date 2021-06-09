@@ -3,7 +3,7 @@ import { ViewBase,Text } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 import Home from '../Home';
-import News from '../News';
+import NewsPageNavigation from '../Navigation/NewsPageNavigation';
 import ViewNews from '../ViewNews';
 
 
@@ -33,7 +33,7 @@ showIcon :true,
       
       title="Home"
       />
-      <Tab.Screen name="News" component={News}
+      <Tab.Screen name="News" component={NewsPageNavigation}
       title="Fast News"
       
       />

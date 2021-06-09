@@ -5,7 +5,6 @@ import {  FONT_SIZE_EXTRA_LARGE,
     FONT_SIZE_NORMAL,
     FONT_SIZE_LARGE,
     FONT_SIZE_SMALL,} from '../constants/Dimens';
-
 import {GRAY, WHITE, DARK_GRAY, NEWS_TITLE} from '../constants/Colors';
 
 import {

@@ -3,9 +3,12 @@ import { StyleSheet,View } from 'react-native';
 import { WebView } from 'react-native-webview';
 
 
-const  WebViews = () => {
+const  WebViews = (props) => {
     return(
-       <WebView source={{ uri: 'https://reactnative.dev/' }} />
+        <View style={{flex:1}}>
+        {console.log(props)}
+       <WebView source={{ uri: props.route.params.url }} />
+        </View>
 
     )
 }
