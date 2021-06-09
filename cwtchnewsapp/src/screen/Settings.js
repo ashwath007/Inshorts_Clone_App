@@ -5,40 +5,25 @@ import {
     GoogleSigninButton,
     statusCodes,
   } from '@react-native-google-signin/google-signin';
+import {useDispatch, connect} from 'react-redux';
+import propsType from "prop-types";
+
 
 GoogleSignin.configure({
     webClientId: '350416576934-3qnqa9niinbaikun27jg1vid04kj21c1.apps.googleusercontent.com',
   });
 
 
-const Settings = () => {
+const Settings = ({userDetails}) => {
 
     const [token, settoken] = useState('');
-    const [userData, setuserData] = useState('');
+    const [userData, setuserData] = useState(userDetails);
 
     const [error, seterror] = useState(false);
 
 
-    const getCurrentUserInfo = async () => {
-        try {
-          const userInfo = await GoogleSignin.signInSilently();
-          const userAuth = await GoogleSignin.getTokens();
-          setuserData(userInfo)
-          settoken(userInfo)
-          console.log(userInfo);
-        } catch (error) {
-            seterror(true)
-          if (error.code === statusCodes.SIGN_IN_REQUIRED) {
-            // user has not signed in yet
-          } else {
-            // some other error
-          }
-        }
-      };
-
-    
     useEffect(() => {
-        getCurrentUserInfo()
+
     }, [])
 
 
@@ -47,10 +32,11 @@ const Settings = () => {
             <Text>
                 Settings
             </Text>
-
+        {userDetails.user}
+        {console.log(userDetails)}
             {userData ? (
                 <Text>  
-                        {userData.token}
+                        {userData.user}
                 </Text>
 
             ) : (
@@ -65,4 +51,12 @@ const Settings = () => {
 }
 
 
-export default Settings;
+Settings.propsType = {
+    userDetails: propsType.object.isRequired
+}
+
+const mapStateToProps = (state) => ({
+    userDetails: state.auth.user
+})
+
+export default connect(mapStateToProps,null)(Settings)
