@@ -2,7 +2,8 @@ import React, { Component,useState } from 'react';
 import { Image,StyleSheet, Dimensions,
     Animated,
     PanResponder,} from 'react-native';
-import { Container, Header, View, DeckSwiper, Card, CardItem, Thumbnail, Text, Left, Body, Icon,Button } from 'native-base';
+// import { Container, Header, View, Button, Icon, Fab } from 'native-base';
+import { Container, Header, DeckSwiper, Card, CardItem,View, Fab,Thumbnail, Text, Left, Body, Icon,Button } from 'native-base';
 import Carousel from 'react-native-snap-carousel';
 
 const SCREEN_WIDTH = Dimensions.get("window").width;
@@ -12,8 +13,11 @@ import NewsCards from './Components/NewsCards';
 
 
 const News = () => {
-
+    // News Feeds
     const [indexAt, setindexAt] = useState(0);
+
+    // FABs Active
+    const [active, setactive] = useState(false);
 
     const ARTICLES = [
         { id: 1,text: 'Ashwath',content:"React Native's Image component handles image caching like browsers for the most part. If the server is returning proper cache control headers for images you'll generally get the sort of built in caching behavior you'd have in a browser. Even so many people have noticed:" , uri: "https://images.unsplash.com/photo-1622890276840-8eabe803e2bb?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80" },
@@ -31,6 +35,14 @@ const News = () => {
             // </View>
         );
       }
+
+      const handleEndReached = () => {
+            return( 
+               <Text>
+                   Hooo
+               </Text>
+            )
+      }
     return(
         <Container style={styles.fastbox}>
     <View style={{flex: 1}}>
@@ -45,13 +57,31 @@ const News = () => {
           inactiveSlideScale={1}
           vertical={true}
           swipeThreshold={70}
-        //   onEndReached={this.handleEndReached}
+          onEndReached={handleEndReached}
           nestedScrollEnabled
           windowSize={5}
           onSnapToItem={(index) => setindexAt(index)}
           // ListEmptyComponent={<ShortsLoader />}
         />
       </View>
+      <Fab
+            active={active}
+            direction="up"
+            containerStyle={{ }}
+            style={{ backgroundColor: '#5067FF' }}
+            position="bottomRight"
+            onPress={() => setactive(!active )}>
+            <Icon name="share" />
+            <Button style={{ backgroundColor: '#34A34F' }}>
+              <Icon name="logo-whatsapp" />
+            </Button>
+            <Button style={{ backgroundColor: '#3B5998' }}>
+              <Icon name="logo-facebook" />
+            </Button>
+            <Button disabled style={{ backgroundColor: '#DD5144' }}>
+              <Icon name="mail" />
+            </Button>
+          </Fab>
         </Container>
     )
 }
