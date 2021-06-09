@@ -1,28 +1,43 @@
 import React from 'react';
-import { StyleSheet,View,SafeAreaView } from 'react-native';
+import { StyleSheet,View,SafeAreaView,Text } from 'react-native';
+import FastImage from 'react-native-fast-image'
+import {  FONT_SIZE_EXTRA_LARGE,
+    FONT_SIZE_NORMAL,
+    FONT_SIZE_LARGE,
+    FONT_SIZE_SMALL,} from '../constants/Dimens';
+
+import {GRAY, WHITE, DARK_GRAY, NEWS_TITLE} from '../constants/Colors';
+
+import {
+    FONT_REGULAR,
+    FONT_BOLD,
+    FONT_MEDIUM,
+    FONT_LIGHT,
+    momentCalendarConfig,
+  } from '../constants/Constants';
 
 
+const NewsCards = (ARTICLES) => {
 
-const NewsCards = ({ARTICLES}) => {
-
-    const {title,url} = ARTICLES;
+    
 
 
     return(
  <View style={styles.container}>
+     {console.log(ARTICLES)}
         <View style={styles.top}>
           <FastImage
             style={{flex: 1}}
             source={{
-              uri: url,
+              uri: ARTICLES.news.uri,
             }}
             resizeMode={FastImage.resizeMode.cover}
           />
         </View>
 
         <View style={[styles.middle, styles.contentPadding]}>
-          <Text style={styles.title}>{title}</Text>
-          <Text style={styles.description}>{content}</Text>
+          <Text style={styles.title}>{ARTICLES.news.text}</Text>
+          <Text style={styles.description}>{ARTICLES.news.content}</Text>
           <Text style={styles.byLine} numberOfLines={1} ellipsizeMode="tail">
             {/* {this.getByLineText()} */}
           </Text>
