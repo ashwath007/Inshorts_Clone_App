@@ -4,7 +4,10 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 
 import Home from '../Home';
 import Discover from "../Discover";
-import Article from "../Article"
+import Article from "../Article";
+import Settings from "../Settings";
+
+
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -42,6 +45,13 @@ const HomeMenuNavigation = () => {
         tabBarLabel: 'Article',
         tabBarIcon: ({ color, size }) => (
           <MaterialCommunityIcons name="box" color={color} size={26} />
+        ),}}
+      />
+        <Tab.Screen name="Settings" component={Settings} 
+       options={{
+        tabBarLabel: 'Setting',
+        tabBarIcon: ({ color, size }) => (
+          <MaterialCommunityIcons name="cog-outline" color={color} size={26} />
         ),}}
       />
 
