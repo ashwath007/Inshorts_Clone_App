@@ -14,9 +14,17 @@ const HomePageNavigation = () => {
             <>
 
 <Tab.Navigator
+tabBarPosition="bottom"
 initialRouteName="News"
+swipeVelocityImpact='0.1'
 tabBarOptions={{
-style:{backgroundColor:'red'},
+        indicatorStyle: {
+                height: 3,
+                backgroundColor: '#FF6263',
+     
+            },
+showLabel :false,
+style:{backgroundColor:'#EB4D4B',color:'white',height:0},
 showIcon :true,
       }}
 
