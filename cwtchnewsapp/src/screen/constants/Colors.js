@@ -5,3 +5,5 @@ export const DARK_GRAY = "#262626";
 export const LIGHT_BLUE = "#369af8";
 export const DARKER_GRAY = "#585858";
 export const NEWS_TITLE = "#161616";
+
+export const APP_THEME_COLOR = "#EB4D4B";

@@ -22,6 +22,7 @@
         "prop-types": "^15.7.2",
         "react": "17.0.1",
         "react-native": "0.64.2",
+        "react-native-confirmation-code-field": "^7.1.0",
         "react-native-deck-swiper": "^2.0.5",
         "react-native-fast-image": "^8.3.4",
         "react-native-gesture-handler": "^1.10.3",

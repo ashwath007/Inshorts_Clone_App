@@ -1,14 +1,14 @@
 import React,{useEffect,useState} from 'react';
 import { connect} from 'react-redux'
+import {Dimensions } from "react-native"
 import propTypes from 'prop-types'
+import { APP_THEME_COLOR,WHITE } from './constants/Colors';
 import {
     SafeAreaView,
     ScrollView,
     StatusBar,
     StyleSheet,
-    TextInput,
-    Text,
-    Button,
+
     useColorScheme,
     TouchableOpacity,
     View,
@@ -19,10 +19,25 @@ import {
     GoogleSigninButton,
     statusCodes,
   } from '@react-native-google-signin/google-signin';
+  import {
+    CodeField,
+    Cursor,
+    useBlurOnFulfill,
+    useClearByFocusCell,
+  } from 'react-native-confirmation-code-field';
 
 
   import {googleSignIn,phoneSignIn,verifyPhone} from "../action/auth"
 
+  import { Avatar ,Text,Subheading,Caption,TextInput,Button  } from 'react-native-paper';
+  import LOGO from "./src/logo.png"
+
+  const windowWidth = Dimensions.get('window').width;
+  const windowHeight = Dimensions.get('window').height;
+
+
+
+  const CELL_COUNT = 6;
   const Login = ({googleSignIn,authState,phoneSignIn,verifyPhone}) => {
     
     const [user, setuser] = useState('');
@@ -32,7 +47,13 @@ import {
     const [confirm, setconfirm] = useState(null);
 
     const [isSent, setisSent] = useState(false);
-
+    const [value, setValue] = useState(''); 
+    const ref = useBlurOnFulfill({value, cellCount: CELL_COUNT});
+  const [props, getCellOnLayoutHandler] = useClearByFocusCell({
+    value,
+    setValue,
+  });
+    
     const signIn = async () => {
         try {
           await GoogleSignin.hasPlayServices();
@@ -70,8 +91,17 @@ import {
       const doPhoneSignin = async() => {
         console.log("Phone -> ",phone);
           if(phone){
-           let res =  await phoneSignIn({phone})
-           console.log('res => ',res);
+            if(phone.length === 10){
+              var tphone = "+91"+phone;
+              setphone(tphone)
+              let res =  await phoneSignIn({phone})
+              console.log('res => ',res);
+            }
+            else if(phone.length === 13){
+              let res =  await phoneSignIn({phone})
+              console.log('res => ',res);
+            }
+         
 
            if(res){
             setconfirm(res)
@@ -86,10 +116,29 @@ import {
         verifyPhone({code,confirm});
         }
 
-      if(isSent){
+      if(true){
         return(
-          <View>
-            <TextInput placeholder="Enter the code" onChangeText={(txt) => setcode(txt)} defaultValue={code}/>
+          <View style={{padding:30,flexDirection:'column'}}>
+            <CodeField
+        ref={ref}
+        {...props}
+        // Use `caretHidden={false}` when users can't paste a text value, because context menu doesn't appear
+        value={code}
+        onChangeText={(txt) => setcode(txt)}
+        cellCount={CELL_COUNT}
+        rootStyle={styles.codeFieldRoot}
+        keyboardType="number-pad"
+        textContentType="oneTimeCode"
+        renderCell={({index, symbol, isFocused}) => (
+          <Text
+            key={index}
+            style={[styles.cell, isFocused && styles.focusCell]}
+            onLayout={getCellOnLayoutHandler(index)}>
+            {symbol || (isFocused ? <Cursor /> : null)}
+          </Text>
+        )}
+      />
+            <TextInput placeholder="Enter the code" />
                 <TouchableOpacity onPress={doVerifyPhone}>
                   <Text>
                     Verify
@@ -100,18 +149,25 @@ import {
       }else{
         return(
       
-          <View>
-              <Text>
-              SignIn page
-              </Text>
-              <GoogleSigninButton onPress={() => googleSignIn()}/>
-              <View style={{marginTop:50}}>
-                  <TextInput placeholder="Enter the phone number" style={{height:40}} onChangeText={(t) => setphone(t)} defaultValue={phone}/>
-                  <TouchableOpacity onPress={doPhoneSignin} style={{backgroundColor:'purple',padding:20}}>
-                    <Text style={{color:'white'}}>
-                      Send
-                    </Text>
-                  </TouchableOpacity>
+          <View style={styles.lbody}>
+            <Avatar.Image size={100} source={LOGO} style={{alignSelf:'center',marginTop:50}}/>
+            <Text style={{fontFamily:'poppins',fontSize:18,alignSelf:'center',marginTop:12}}>
+
+              Oii Signin fast...
+            </Text>
+              <GoogleSigninButton onPress={() => googleSignIn()} style={{alignSelf:'center',marginTop:52}}/>
+
+              <Text style={{fontFamily:'poppins',fontSize:18,alignSelf:'center',marginTop:12}}>
+
+or
+</Text>
+              <View style={{marginTop:50,padding:20}}>
+                  <TextInput placeholder="Enter the phone number" style={{height:40,marginBottom:15}} onChangeText={(t) => setphone(t)} defaultValue={phone}/>
+                  <Button icon="login" mode="contained" onPress={doPhoneSignin}>
+    Press me
+  </Button>
+                  
+                
               </View>
           </View>
         )
@@ -124,8 +180,27 @@ import {
      
   }
 
-const styles = new StyleSheet.create({
-
+  const styles = new StyleSheet.create({
+    lbody: {
+      backgroundColor: WHITE,
+      height:windowHeight
+    },
+    root: {flex: 1, padding: 20,justifyContent:'center'},
+  title: {textAlign: 'center', fontSize: 30},
+  codeFieldRoot: {marginTop: 20},
+  cell: {
+    width: 40,
+    height: 40,
+    lineHeight: 38,
+    fontSize: 24,
+    borderWidth: 2,
+    borderRadius:8,  
+    borderColor: APP_THEME_COLOR,
+    textAlign: 'center',
+  },
+  focusCell: {
+    borderColor: '#000',
+  },
 })
 const mapDispatchToProps = {
   googleSignIn,
@@ -146,3 +221,5 @@ Login.prototypes = {
   
 }
 export default connect(mapStateToProps, mapDispatchToProps )(Login);
+
+
