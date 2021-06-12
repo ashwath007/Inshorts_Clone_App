@@ -1,7 +1,8 @@
-import React,{useEffect,useState} from 'react';
-import { StyleSheet,View,  Text } from 'react-native';
+import React,{useEffect,useState,useRef} from 'react';
+import { StyleSheet,View,TouchableOpacity,  Text } from 'react-native';
 import { Appbar,Divider } from 'react-native-paper';
-import { List ,Switch} from 'react-native-paper';
+import { List,Button } from 'react-native-paper';
+import RBSheet from "react-native-raw-bottom-sheet";
 import {
     GoogleSignin,
     GoogleSigninButton,
@@ -9,6 +10,8 @@ import {
   } from '@react-native-google-signin/google-signin';
 import {useDispatch, connect} from 'react-redux';
 import propsType from "prop-types";
+import {googleSignout} from '../action/auth'
+
 
 
 GoogleSignin.configure({
@@ -20,7 +23,7 @@ GoogleSignin.configure({
 
 
 
-const Settings = ({userDetails}) => {
+const Settings = ({userDetails,googleSignout}) => {
 
 
     const _goBack = () => console.log('Went back');
@@ -34,7 +37,7 @@ const Settings = ({userDetails}) => {
 
     const [error, seterror] = useState(false);
 
-
+    const bottomSheetRef = useRef([]);
     useEffect(() => {
 
     }, [])
@@ -51,9 +54,7 @@ const Settings = ({userDetails}) => {
     ]
 
   
-    const onToggleSwitch = () => {
-        
-    }
+
     return(
         <View>
 <Appbar.Header
@@ -62,7 +63,7 @@ const Settings = ({userDetails}) => {
 
       <Appbar.Content title="Settings"/>
 
-      <Appbar.Action icon="account-circle" onPress={_handleMore} />
+      <Appbar.Action icon="account-circle" onPress={() => bottomSheetRef.current.open()} />
     </Appbar.Header>
 
         {console.log(userDetails)}
@@ -71,18 +72,14 @@ const Settings = ({userDetails}) => {
             <List.Section>
             {options.map((op,index) => {
                 return(
-                    <>
+                    <View key={index}>
                     <List.Item
-                    key={index}
                     title={op.oname}
                     description={op.subname}
                     left={props => <List.Icon {...props} icon={op.logo}/>}
-                    right={
-                        props => <Switch value={true} onValueChange={onToggleSwitch} />
-                    }
                   />
                      <Divider />
-                  </>
+                  </View>
                 )
             })
 
@@ -92,18 +89,54 @@ const Settings = ({userDetails}) => {
             </View>
 
 
+            <RBSheet
+        ref={(el) => (bottomSheetRef.current = el)}
+        closeOnDragDown={true}
+        closeOnPressMask={true}
+        height={180}
+        customStyles={{
+          wrapper: {
+            backgroundColor: 'rgba(0, 0, 0, 0.4)',
+          },
+          draggableIcon: {
+            backgroundColor: '#000',
+          },
+          container: {
+            borderTopRightRadius: 20,
+            borderTopLeftRadius: 20,
+          },
+        }}>
+            <View>
+                <Text style={{alignSelf:'center',marginTop:12,fontFamily:'popins',fontSize:19}}>
+                    We will miss U
+                </Text>
+                <View style={{padding:12}}>
 
+                <Button icon="logout" color="#EB4D4B" mode="contained" onPress={() => googleSignout()}>
+    Signout
+  </Button>
+                </View>
+              
+
+                </View>
+      </RBSheet>
         </View>
     )
 }
 
 
 Settings.propsType = {
-    userDetails: propsType.object.isRequired
+    userDetails: propsType.object.isRequired,
+    googleSignout: propsType.func.isRequired
 }
+
+const mapDispatchToProps = {
+    googleSignout
+  }
+  
 
 const mapStateToProps = (state) => ({
     userDetails: state.auth.user
 })
 
-export default connect(mapStateToProps,null)(Settings)
+export default connect(mapStateToProps,mapDispatchToProps)(Settings)
