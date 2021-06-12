@@ -1,7 +1,7 @@
 import React,{useEffect,useState} from 'react';
 import { StyleSheet,View,  Text } from 'react-native';
 import { Appbar,Divider } from 'react-native-paper';
-import { List } from 'react-native-paper';
+import { List ,Switch} from 'react-native-paper';
 import {
     GoogleSignin,
     GoogleSigninButton,
@@ -14,6 +14,10 @@ import propsType from "prop-types";
 GoogleSignin.configure({
     webClientId: '350416576934-3qnqa9niinbaikun27jg1vid04kj21c1.apps.googleusercontent.com',
   });
+
+
+
+
 
 
 const Settings = ({userDetails}) => {
@@ -37,17 +41,19 @@ const Settings = ({userDetails}) => {
 
 
     const options = [
-        { oname:'Auto Start', subname: '',logo:'notification'},
-        { oname:'Language', subname: 'Choose Language',logo:'notification'},
-        { oname:'Notifications', subname: 'Please enable to receive notification',logo:'notification'},
-        { oname:'Personalize Your Feed', subname: 'Please enable to receive notification',logo:'notification'},
-        { oname:'HD Images', subname: 'Please enable to receive notification',logo:'notification'},
-        { oname:'Night Mode', subname: 'Please enable to receive notification',logo:'notification'},
-        { oname:'Autoplay', subname: 'Please enable to receive notification',logo:'notification'},
+        { oname:'Auto Start', subname: '',logo:'arrow-right-drop-circle-outline'},
+        { oname:'Language', subname: 'Choose Language',logo:'sort-alphabetical-descending-variant'},
+        { oname:'Notifications', subname: 'Please enable to receive notification',logo:'bell-check-outline'},
+        { oname:'Personalize Your Feed', subname: 'Please enable to receive notification',logo:'boomerang'},
+        { oname:'HD Images', subname: 'Please enable to receive notification',logo:'camera-iris'},
+        { oname:'Night Mode', subname: 'Please enable to receive notification',logo:'white-balance-incandescent'},
+        { oname:'Autoplay', subname: 'Please enable to receive notification',logo:'arrow-right-drop-circle'},
     ]
 
   
-
+    const onToggleSwitch = () => {
+        
+    }
     return(
         <View>
 <Appbar.Header
@@ -67,9 +73,13 @@ const Settings = ({userDetails}) => {
                 return(
                     <>
                     <List.Item
+                    key={index}
                     title={op.oname}
                     description={op.subname}
                     left={props => <List.Icon {...props} icon={op.logo}/>}
+                    right={
+                        props => <Switch value={true} onValueChange={onToggleSwitch} />
+                    }
                   />
                      <Divider />
                   </>
