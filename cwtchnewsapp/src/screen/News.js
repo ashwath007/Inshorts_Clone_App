@@ -131,7 +131,7 @@ const News = ({navigation}) => {
 
 const styles = new StyleSheet.create({
     fastbox:{
-        backgroundColor:'gray'
+        backgroundColor:'#fff'
     }
 })
 
