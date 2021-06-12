@@ -96,19 +96,26 @@ import {
               setphone(tphone)
               let res =  await phoneSignIn({phone})
               console.log('res => ',res);
+              if(res){
+                setconfirm(res)
+                setisSent(true)
+                  console.log(res);
+    
+               }
             }
             else if(phone.length === 13){
               let res =  await phoneSignIn({phone})
               console.log('res => ',res);
+              if(res){
+                setconfirm(res)
+                setisSent(true)
+                  console.log(res);
+    
+               }
             }
          
 
-           if(res){
-            setconfirm(res)
-            setisSent(true)
-              console.log(res);
-
-           }
+           
           }
       }
       const doVerifyPhone = async() => {
@@ -116,9 +123,9 @@ import {
         verifyPhone({code,confirm});
         }
 
-      if(true){
+      if(isSent){
         return(
-          <View style={{padding:30,flexDirection:'column'}}>
+          <View style={{padding:30,marginTop:105}}>
             <CodeField
         ref={ref}
         {...props}
@@ -138,12 +145,12 @@ import {
           </Text>
         )}
       />
-            <TextInput placeholder="Enter the code" />
-                <TouchableOpacity onPress={doVerifyPhone}>
-                  <Text>
-                    Verify
-                  </Text>
-                </TouchableOpacity>
+
+         
+                <Button icon="shield-check" mode="contained" onPress={doVerifyPhone} style={{marginTop:14,backgroundColor:APP_THEME_COLOR}}>
+    Verify
+  </Button>
+
           </View>
         )
       }else{
@@ -185,7 +192,7 @@ or
       backgroundColor: WHITE,
       height:windowHeight
     },
-    root: {flex: 1, padding: 20,justifyContent:'center'},
+    root: {flex: 1, padding: 20,  marginTop:80},
   title: {textAlign: 'center', fontSize: 30},
   codeFieldRoot: {marginTop: 20},
   cell: {
