@@ -26,6 +26,7 @@
         "react-native-deck-swiper": "^2.0.5",
         "react-native-fast-image": "^8.3.4",
         "react-native-gesture-handler": "^1.10.3",
+        "react-native-linear-gradient": "^2.5.6",
         "react-native-pager-view": "^5.1.10",
         "react-native-paper": "^4.9.1",
         "react-native-raw-bottom-sheet": "^2.2.0",

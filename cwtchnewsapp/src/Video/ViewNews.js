@@ -13,8 +13,8 @@ import {  FONT_SIZE_EXTRA_LARGE,
     FONT_SIZE_SMALL,} from '../constants/Dimens';
 import Video from 'react-native-video';
 
-import {GRAY, WHITE, DARK_GRAY, NEWS_TITLE} from './constants/Constants';
-import VideoCard from "./Components/VideoCard"
+import {GRAY, WHITE, DARK_GRAY, NEWS_TITLE} from '../screen/constants/Constants';
+import VideoCard from "../screen/Components/VideoCard"
 import {
     FONT_REGULAR,
     FONT_BOLD,

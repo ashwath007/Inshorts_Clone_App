@@ -5,11 +5,15 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import Home from '../Home';
 import NewsPageNavigation from '../Navigation/NewsPageNavigation';
 import HomeMenuNavigation from './HomeMenuNavigation';
-import ViewNews from '../ViewNews';
+import ViewNews from '../../Video/ViewNews';
+
+// Live
+import Live from "../Live"
 
 
 //Test
-import DummyVideo from '../DummyVideo';
+// import DummyVideo from '../../Video/DummyVideo';
+
 
 
 const Tab = createMaterialTopTabNavigator();
@@ -42,11 +46,11 @@ showIcon :true,
       title="Fast News"
       
       />
-      <Tab.Screen name="Live"
-      children={() => <DummyVideo/>}
+      {/* <Tab.Screen name="Live"
+      children={() => <Live/>}
       title="Live News"
       
-      />
+      /> */}
 
     </Tab.Navigator>
             </>

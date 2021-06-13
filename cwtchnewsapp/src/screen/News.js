@@ -5,7 +5,7 @@ import { Image,StyleSheet, Dimensions,
     BackHandler,
     PanResponder,} from 'react-native';
     import { WebView } from 'react-native-webview';
-
+    import Swipeable from 'react-native-gesture-handler/Swipeable'
 // import { Container, Header, View, Button, Icon, Fab } from 'native-base';
 import { Container, Header, DeckSwiper, Card, CardItem,View, Fab,Thumbnail, Text, Left, Body, Icon,Button } from 'native-base';
 import Carousel from 'react-native-snap-carousel';
@@ -55,7 +55,9 @@ const News = ({navigation}) => {
 
       const renderItem = ({item,index}) => {
         return (
+          // <Swipeable renderLeftActions={() => {goLive}}>
             <NewsCards news={ARTICLES[index]}/>
+            //  </Swipeable>
             // <View>
             //     <Text>{ARTICLES[index].text}</Text>
             // </View>
@@ -73,13 +75,18 @@ const News = ({navigation}) => {
       const setactive1Btn = () => {
         setopenweb(false)
       }
+
+      const goLive = () => {
+        return navigation.navigate("WebViews")
+      }
      
         return(
             <Container style={styles.fastbox}>
         <View style={{flex: 1}}>
             {/* <TouchableOpacity
-                onLongPress={() => setopenweb(true)}
+                onPress={() => navigation.navigate("Live")}
             > */}
+             {/* <Swipeable renderLeftActions={goLive}> */}
             <Carousel
               data={ARTICLES}
               renderItem={renderItem}
@@ -96,7 +103,8 @@ const News = ({navigation}) => {
               windowSize={5}
               onSnapToItem={(index) => setindexAt(index)}
               // ListEmptyComponent={<ShortsLoader />}
-            />
+            /> 
+            {/* </Swipeable> */}
             {/* </TouchableOpacity> */}
           </View>
           <Fab

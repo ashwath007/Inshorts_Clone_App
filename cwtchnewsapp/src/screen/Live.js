@@ -1,17 +1,16 @@
 import React from 'react';
 import { StyleSheet,View,Text } from 'react-native';
-import { WebView } from 'react-native-webview';
 
 
-const  WebViews = () => {
+
+const Live = () => {
     return(
-        <View style={{flex:1}}>
+        <View>
             <Text>
-                Shit  dd
+                Jiiii hoooo
             </Text>
         </View>
-
     )
 }
 
-export default WebViews;
+export default Live;

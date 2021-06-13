@@ -58,7 +58,7 @@ const Settings = ({userDetails,googleSignout}) => {
     return(
         <View>
 <Appbar.Header
-           style={{backgroundColor:'#EB4D4B'}}
+           style={{backgroundColor:'#fff'}}
            >
 
       <Appbar.Content title="Settings"/>

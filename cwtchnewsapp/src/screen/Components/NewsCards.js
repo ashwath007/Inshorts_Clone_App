@@ -6,6 +6,7 @@ import {  FONT_SIZE_EXTRA_LARGE,
     FONT_SIZE_LARGE,
     FONT_SIZE_SMALL,} from '../constants/Dimens';
 import {GRAY, WHITE, DARK_GRAY, NEWS_TITLE} from '../constants/Colors';
+import Swipeable from 'react-native-gesture-handler/Swipeable'
 
 import {
     FONT_REGULAR,
@@ -19,9 +20,14 @@ import {
 const NewsCards = (ARTICLES) => {
 
     
-
+  const goLive = () => {
+    return navigation.navigate("WebViews")
+  }
+ 
 
     return(
+      // <Swipeable renderLeftActions={() => {goLive}}>
+
  <View style={styles.container}>
      {console.log(ARTICLES)}
         <View style={styles.top}>
@@ -57,6 +63,8 @@ const NewsCards = (ARTICLES) => {
           </Text>
         </View>
         </View>
+        // </Swipeable>
+   
     )
 }
 

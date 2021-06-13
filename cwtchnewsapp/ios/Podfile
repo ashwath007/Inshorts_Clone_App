@@ -14,6 +14,8 @@ target 'cwtchnewsapp' do
 
   pod 'react-native-video', :path => '../node_modules/react-native-video'
 
+  pod 'RNSound', :path => '../node_modules/react-native-sound'
+
   target 'cwtchnewsappTests' do
     inherit! :complete
     # Pods for testing
