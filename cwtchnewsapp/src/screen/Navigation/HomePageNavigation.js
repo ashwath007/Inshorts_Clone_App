@@ -8,6 +8,10 @@ import HomeMenuNavigation from './HomeMenuNavigation';
 import ViewNews from '../ViewNews';
 
 
+//Test
+import DummyVideo from '../DummyVideo';
+
+
 const Tab = createMaterialTopTabNavigator();
 
 const HomePageNavigation = () => {
@@ -39,7 +43,7 @@ showIcon :true,
       
       />
       <Tab.Screen name="Live"
-      children={() => <ViewNews urlData={"www.brksystems.com"} />}
+      children={() => <DummyVideo/>}
       title="Live News"
       
       />
