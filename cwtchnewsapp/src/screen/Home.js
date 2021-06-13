@@ -119,9 +119,11 @@ const Home = ({googleSignout,navigation}) => {
     }
 
     return(
-        <ScrollView>
-           <Appbar.Header
-           style={{backgroundColor:'#EB4D4B'}}
+      <>
+      <View>
+      <Appbar.Header
+           style={{backgroundColor:'#fff'}}
+  
            >
 
       <Appbar.Content title="Discover"/>
@@ -129,14 +131,20 @@ const Home = ({googleSignout,navigation}) => {
       <Appbar.Action icon="cog-outline" onPress={_handleMore} />
     </Appbar.Header>
 
-      <View>
-        <View style={{padding:20}}>
+      <View style={{padding:10}}>
         <Searchbar
       placeholder="Search"
       onChangeText={() => {}}
       value={searchQuery}
     />
         </View>
+      </View>
+        
+        <ScrollView style={{marginTop:12}}>
+        
+
+      <View>
+       
         <View>
         <Carousel
               ref={(c) => { setcorosel(c) }}
@@ -188,6 +196,7 @@ const Home = ({googleSignout,navigation}) => {
       </View>
 
         </ScrollView>
+        </>
     )
 }
 
