@@ -38,7 +38,8 @@ showIcon :true,
       title="Fast News"
       
       />
-      <Tab.Screen name="Live" component={ViewNews}
+      <Tab.Screen name="Live"
+      children={() => <ViewNews urlData={"www.brksystems.com"} />}
       title="Live News"
       
       />

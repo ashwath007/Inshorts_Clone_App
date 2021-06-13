@@ -10,7 +10,11 @@ import WebViews from '../Components/WebView';
 const NewsPageNavigation = () => {
     return(
 <>
-<Stack.Navigator>
+<Stack.Navigator
+      screenOptions={{
+        headerShown: false
+      }}
+>
       <Stack.Screen name="News" component={News} />
       <Stack.Screen name="WebViews" component={WebViews} />
       {/* <Stack.Screen name="Profile" component={Profile} />
