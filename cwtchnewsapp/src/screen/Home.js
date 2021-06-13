@@ -164,6 +164,7 @@ const Home = ({googleSignout,navigation}) => {
           <View style={{flexDirection:'column',justifyContent:'space-between',paddingLeft:20}}>
 
           <FlatList
+           showsHorizontalScrollIndicator={false}
         data={MainCategoryData}
         horizontal={true}
         renderItem={renderCategory}

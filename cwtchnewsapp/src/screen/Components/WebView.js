@@ -1,14 +1,13 @@
 import React from 'react';
-import { StyleSheet,View,Text } from 'react-native';
+import { StyleSheet,View } from 'react-native';
 import { WebView } from 'react-native-webview';
 
 
-const  WebViews = () => {
+const  WebViews = (props) => {
     return(
         <View style={{flex:1}}>
-            <Text>
-                Shit  dd
-            </Text>
+        {console.log(props)}
+       <WebView source={{ uri: props.route.params.url }} />
         </View>
 
     )

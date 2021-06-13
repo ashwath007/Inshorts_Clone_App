@@ -169,7 +169,9 @@ import {
 or
 </Text>
               <View style={{marginTop:50,padding:20}}>
-                  <TextInput placeholder="Enter the phone number" style={{height:40,marginBottom:15}} onChangeText={(t) => setphone(t)} defaultValue={phone}/>
+                  <TextInput 
+                  keyboardType='phone-pad'
+                  placeholder="Enter the phone number" style={{height:40,marginBottom:15}} onChangeText={(t) => setphone(t)} defaultValue={phone}/>
                   <Button icon="login" mode="contained" onPress={doPhoneSignin}>
     Press me
   </Button>
