@@ -98,7 +98,7 @@ const Home = ({getCore,getTopics,topicState,coreState,googleSignout,navigation})
       
       const renderItem = ({item, index}) => {
         return (
-          <TouchableOpacity onPress={() => {navigation.navigate("News"
+          <TouchableOpacity onPress={() => {navigation.navigate("HomeNews"
           , {
             newstopics: item.title,
           }
