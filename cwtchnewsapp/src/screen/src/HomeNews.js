@@ -189,9 +189,12 @@ const HomeNews = ({route,navigation}) => {
               itemWidth={SCREEN_WIDTH}
               itemHeight={SCREEN_HEIGHT}
               inactiveSlideOpacity={1}
+              enableMomentum={true}
+              enableSnap={true}
               inactiveSlideScale={1}
               vertical={true}
-              swipeThreshold={10}
+              activeSlideOffset={100}
+              swipeThreshold={2}
               onEndReached={handleEndReached}
               nestedScrollEnabled
               windowSize={5}
