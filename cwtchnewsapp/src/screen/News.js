@@ -9,14 +9,19 @@ import { Image,StyleSheet, Dimensions,
 // import { Container, Header, View, Button, Icon, Fab } from 'native-base';
 import { Container, Header, DeckSwiper, Card, CardItem,View, Fab,Thumbnail, Text, Left, Body, Icon,Button } from 'native-base';
 import Carousel from 'react-native-snap-carousel';
+import propType from 'prop-types'
+
+
+import {getAllNews} from '../action/news'
 
 const SCREEN_WIDTH = Dimensions.get("window").width;
 const SCREEN_HEIGHT = Dimensions.get("window").height;
 
 import NewsCards from './Components/NewsCards';
 import WebViews from './Components/WebView';
+import { connect } from 'react-redux';
 
-const News = ({navigation}) => {
+const News = ({navigation,getAllNews,newsState}) => {
 
     useEffect(() => {
         const backAction = () => {
@@ -32,6 +37,9 @@ const News = ({navigation}) => {
       }, []);
     
 
+      useEffect(() => {
+        getAllNews()
+      }, [])
 
     // News Feeds
     const [indexAt, setindexAt] = useState(0);
@@ -39,6 +47,7 @@ const News = ({navigation}) => {
     // FABs Active
     const [active, setactive] = useState(false);
     const [active1, setactive1] = useState(false);
+
 
 
 
@@ -56,7 +65,7 @@ const News = ({navigation}) => {
       const renderItem = ({item,index}) => {
         return (
           // <Swipeable renderLeftActions={() => {goLive}}>
-            <NewsCards news={ARTICLES[index]}/>
+            <NewsCards news={newsState.news[index]}/>
             //  </Swipeable>
             // <View>
             //     <Text>{ARTICLES[index].text}</Text>
@@ -83,12 +92,13 @@ const News = ({navigation}) => {
         return(
             <Container style={styles.fastbox}>
         <View style={{flex: 1}}>
+          {console.log("News",newsState.news)}
             {/* <TouchableOpacity
                 onPress={() => navigation.navigate("Live")}
             > */}
              {/* <Swipeable renderLeftActions={goLive}> */}
             <Carousel
-              data={ARTICLES}
+              data={newsState.news}
               renderItem={renderItem}
               sliderWidth={SCREEN_WIDTH}
               sliderHeight={SCREEN_HEIGHT}
@@ -115,7 +125,7 @@ const News = ({navigation}) => {
                 position="bottomRight"
                 // onPress={() => setactive(!active )}>
                 onPress={() => navigation.navigate('WebViews', {
-                    url:ARTICLES[indexAt].new_url
+                    url:newsState.news[indexAt].url
                 })}>
 
                 <Icon name="share" />
@@ -143,4 +153,20 @@ const styles = new StyleSheet.create({
     }
 })
 
-export default News;
+News.propType = ({
+  getAllNews: propType.func.isRequired,
+  newsState: propType.object.isRequired
+})
+
+
+const mapStateToProps = (state) => ({
+  newsState: state.news
+})
+
+const mapDispatchToProps = {
+  getAllNews
+}
+
+
+
+export default connect(mapStateToProps,mapDispatchToProps)(News);

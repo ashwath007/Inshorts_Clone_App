@@ -29,20 +29,20 @@ const NewsCards = (ARTICLES) => {
       // <Swipeable renderLeftActions={() => {goLive}}>
 
  <View style={styles.container}>
-     {/* {console.log(ARTICLES)} */}
+     {console.log(ARTICLES.news.pic)}
         <View style={styles.top}>
           <FastImage
             style={{flex: 1}}
             source={{
-              uri: ARTICLES.news.uri,
+              uri: ARTICLES.news.pic,
             }}
             resizeMode={FastImage.resizeMode.cover}
           />
         </View>
 
         <View style={[styles.middle, styles.contentPadding]}>
-          <Text style={styles.title}>{ARTICLES.news.text}</Text>
-          <Text style={styles.description}>{ARTICLES.news.content}</Text>
+          <Text style={styles.title}>{ARTICLES.news.newsTitle}</Text>
+          <Text style={styles.description}>{ARTICLES.news.newsDetails}</Text>
           <Text style={styles.byLine} numberOfLines={1} ellipsizeMode="tail">
             {/* {this.getByLineText()} */}
           </Text>

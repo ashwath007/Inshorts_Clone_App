@@ -110,9 +110,9 @@ const Settings = ({userDetails,googleSignout}) => {
                 <Text style={{alignSelf:'center',marginTop:12,fontFamily:'popins',fontSize:19}}>
                     We will miss U
                 </Text>
-                <View style={{padding:12}}>
+                <View>
 
-                <Button icon="logout" color="#EB4D4B" mode="contained" onPress={() => googleSignout()}>
+                <Button icon="logout" style={{height:23}} color="#EB4D4B" mode="contained" onPress={() => googleSignout()}>
     Signout
   </Button>
                 </View>

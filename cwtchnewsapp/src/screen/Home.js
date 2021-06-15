@@ -127,13 +127,13 @@ const Home = ({getCore,getTopics,topicState,coreState,googleSignout,navigation})
     }
 
     if(coreState.loading){
-      console.log("coreState - ",coreState);
+      // console.log("coreState - ",coreState);
       return <Splash/>
   }
 
   
   if(topicState.loading){
-    console.log("topicState - ",topicState);
+    // console.log("topicState - ",topicState);
 
     return <Splash/>
 }
@@ -141,8 +141,8 @@ const Home = ({getCore,getTopics,topicState,coreState,googleSignout,navigation})
 
     return(
       <>
-      {console.log(coreState.core)}
-      {console.log(topicState.topics)}
+      {/* {console.log(coreState.core)}
+      {console.log(topicState.topics)} */}
 
       <View>
       <Appbar.Header
