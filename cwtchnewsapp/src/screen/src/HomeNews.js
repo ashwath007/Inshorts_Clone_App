@@ -10,7 +10,7 @@ import { Image,StyleSheet, Dimensions,
 import { Container, Header, DeckSwiper, Card, CardItem,View, Fab,Thumbnail, Text, Left, Body, Icon,Button } from 'native-base';
 import Carousel from 'react-native-snap-carousel';
 import propType from 'prop-types'
-
+import database from "@react-native-firebase/database"
 
 
 const SCREEN_WIDTH = Dimensions.get("window").width;
@@ -20,8 +20,10 @@ import NewsCards from '../Components/NewsCards';
 import WebViews from '../Components/WebView';
 import { connect } from 'react-redux';
 import Splash from '../SplashScreen/Splash';
+import HomeNewsCards from '../src/HomeNewsCard'
+const HomeNews = ({route,navigation}) => {
 
-const HomeNews = ({route}) => {
+  const {newstopics,placehome} = route.params;
 
     useEffect(() => {
         const backAction = () => {
@@ -38,8 +40,13 @@ const HomeNews = ({route}) => {
     
 
       useEffect(() => {
-  
+        getNewsByTopics(newstopics,placehome)
       }, [])
+
+
+
+
+
 
     // News Feeds
     const [indexAt, setindexAt] = useState(0);
@@ -47,6 +54,81 @@ const HomeNews = ({route}) => {
     // FABs Active
     const [active, setactive] = useState(false);
     const [active1, setactive1] = useState(false);
+
+
+      // Firebase Querying
+
+      const [newsOn, setnewsOn] = useState([]);
+      const [newsError, setnewsError] = useState(false);
+
+
+      const getNewsByTopics = (newstopics,placehome) => {
+        // console.log("newstopics",newstopics);
+        // console.log("placehome",placehome);
+
+        if(placehome === 'core' || placehome === 'cate' || placehome === 'sugg'){   
+          
+          switch(placehome){
+            case 'core':
+
+              var newRef = database().ref(`/news/`);
+              newRef.orderByChild("core").equalTo(newstopics).once('value').then((snapshot) => {
+                  const value = Object.values(snapshot.val());
+                  // console.log("Hola ",value);
+                  
+                  if(value){
+                    setnewsOn(value)
+                    // console.log(value);
+                  }
+                  else{
+                    setnewsError(true)
+                    console.log('error');
+
+                  }
+              })
+
+              break;
+
+              case 'cate':
+                var newRef = database().ref(`/news/`);
+                newRef.orderByChild("category").equalTo(newstopics).once('value').then((snapshot) => {
+                    const value = Object.values(snapshot.val());
+                    if(value){
+                      setnewsOn(value)
+                    }
+                    else{
+                      setnewsError(true)
+                    }
+                })
+                break;
+                
+              case 'sugg':
+                var newRef = database().ref(`/news/`);
+                newRef.orderByChild("suggested").equalTo(newstopics).once('value').then((snapshot) => {
+                    const value = Object.values(snapshot.val());
+                    if(value){
+                      setnewsOn(value)
+                    }
+                    else{
+                      setnewsError(true)
+                    }
+                })
+                break;
+                default:
+                  setnewsError(true)
+                  break;
+          }
+
+
+
+
+          
+
+        }
+
+     
+
+      }
 
 
 
@@ -62,9 +144,10 @@ const HomeNews = ({route}) => {
       ];
 
       const renderItem = ({item,index}) => {
+        // console.log("object"+index,item);
         return (
           // <Swipeable renderLeftActions={() => {goLive}}>
-            <NewsCards news={item[index]}/>
+            <HomeNewsCards news={item}/>
             //  </Swipeable>
             // <View>
             //     <Text>{ARTICLES[index].text}</Text>
@@ -91,13 +174,15 @@ const HomeNews = ({route}) => {
         return(
             <Container style={styles.fastbox}>
         <View style={{flex: 1}}>
-        
-            {/* <TouchableOpacity
+          {newsOn ? (
+            <View>
+              {/* {console.log("newsOn",newsOn)} */}
+ {/* <TouchableOpacity
                 onPress={() => navigation.navigate("Live")}
             > */}
              {/* <Swipeable renderLeftActions={goLive}> */}
-            <Carousel
-              data={ARTICLES}
+             <Carousel
+              data={newsOn}
               renderItem={renderItem}
               sliderWidth={SCREEN_WIDTH}
               sliderHeight={SCREEN_HEIGHT}
@@ -115,16 +200,15 @@ const HomeNews = ({route}) => {
             /> 
             {/* </Swipeable> */}
             {/* </TouchableOpacity> */}
-          </View>
-          <Fab
+<Fab
                 active={active}
                 direction="up"
                 containerStyle={{ }}
                 style={{ backgroundColor: '#5067FF' }}
                 position="bottomRight"
                 // onPress={() => setactive(!active )}>
-                onPress={() => navigation.navigate('WebViews', {
-                    url:""
+                onPress={() => navigation.navigate('News', {
+                    url:newsOn[indexAt].url
                 })}>
 
                 <Icon name="share" />
@@ -138,6 +222,16 @@ const HomeNews = ({route}) => {
                   <Icon name="mail" />
                 </Button> */}
               </Fab>
+              </View>
+          ) : (
+            <Splash/>
+          ) 
+            
+          }
+        
+           
+          </View>
+          
             </Container>
         )
       

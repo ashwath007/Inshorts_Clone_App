@@ -29,7 +29,7 @@ const HomeNewsCards = (ARTICLES) => {
       // <Swipeable renderLeftActions={() => {goLive}}>
 
  <View style={styles.container}>
-     {console.log(ARTICLES.news.pic)}
+     {/* {console.log("Jil Jil J",ARTICLES)} */}
         <View style={styles.top}>
           <FastImage
             style={{flex: 1}}

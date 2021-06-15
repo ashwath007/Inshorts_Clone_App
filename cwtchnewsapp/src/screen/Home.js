@@ -101,6 +101,7 @@ const Home = ({getCore,getTopics,topicState,coreState,googleSignout,navigation})
           <TouchableOpacity onPress={() => {navigation.navigate("HomeNews"
           , {
             newstopics: item.title,
+            placehome: 'core'
           }
           
           )}}>
