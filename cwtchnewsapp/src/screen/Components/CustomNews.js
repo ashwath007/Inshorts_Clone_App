@@ -4,11 +4,12 @@ import { WebView } from 'react-native-webview';
 
 const CustomNews = ({route}) => {
 
-    const {newstopics} = route.params;
+    const {url} = route.params;
 
     return(
         <View style={{flex:1}}>
-       <WebView source={{ uri: newstopics }} />
+            {console.log(url)}
+       <WebView source={{ uri: url }} />
         </View>
     )
 }
