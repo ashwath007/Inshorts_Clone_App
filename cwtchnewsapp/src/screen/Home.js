@@ -98,13 +98,22 @@ const Home = ({getCore,getTopics,topicState,coreState,googleSignout,navigation})
       
       const renderItem = ({item, index}) => {
         return (
-            <View key={index} style={{height:100,width:190,backgroundColor:item.color,borderRadius:5}}>
+          <TouchableOpacity onPress={() => {navigation.navigate("News"
+          , {
+            newstopics: item.title,
+          }
+          
+          )}}>
+            {console.log(item.title)}
+   <View key={index} style={{height:100,width:190,backgroundColor:item.color,borderRadius:5}}>
                   <Image
               source={{uri:item.logo}}
               style={{height:60,width:60,alignSelf:'center',justifyContent:'center',marginTop:22}}
           />  
                 {/* <Text style={styles.itemName,{alignSelf:'center'}}>{ item.title }</Text>   */}
             </View>
+          </TouchableOpacity>
+         
         );
     }
 

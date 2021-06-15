@@ -6,7 +6,7 @@ import Home from '../Home';
 import Discover from "../Discover";
 import Article from "../Article";
 import Settings from "../Settings";
-
+import CustomNews from '../Components/CustomNews'
 
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -21,6 +21,8 @@ const HomeMenuNavigation = () => {
       }}
       >
       <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen name="News" component={CustomNews} />
+
       <Stack.Screen name="Settings" component={Settings} />
     </Stack.Navigator>
         </>
