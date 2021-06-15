@@ -1,6 +1,7 @@
 import React,{useEffect,useState} from 'react';
 import { connect} from 'react-redux'
 import { Appbar,Searchbar,Subheading   } from 'react-native-paper';
+import {Image} from 'react-native'
 import propTypes from 'prop-types'
 import Carousel from 'react-native-snap-carousel';
 import { getCore } from '../action/core';
@@ -35,7 +36,7 @@ const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 
-const Home = ({getCore,getTopics,coreState,googleSignout,navigation}) => {
+const Home = ({getCore,getTopics,topicState,coreState,googleSignout,navigation}) => {
 
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -111,14 +112,15 @@ const Home = ({getCore,getTopics,coreState,googleSignout,navigation}) => {
 
       useEffect(() => {
           getCore()
+          getTopics()
       }, [])
 
 
       
       const renderItem = ({item, index}) => {
         return (
-            <View style={{height:100,width:190,backgroundColor:'gray',justifyContent:'center',borderRadius:5}}>
-                <Text style={{alignSelf:'center',alignContent:'center'}}>{ item.theme }</Text>
+            <View key={index} style={{height:100,width:190,backgroundColor:'gray',justifyContent:'center',borderRadius:5}}>
+                <Text style={{alignSelf:'center',alignContent:'center'}}>{ item.title }</Text>
             </View>
         );
     }
@@ -134,12 +136,23 @@ const Home = ({getCore,getTopics,coreState,googleSignout,navigation}) => {
     }
 
     if(coreState.loading){
+      console.log("coreState - ",coreState);
       return <Splash/>
   }
+
+  
+  if(topicState.loading){
+    console.log("topicState - ",topicState);
+
+    return <Splash/>
+}
+
 
     return(
       <>
       {console.log(coreState.core)}
+      {console.log(topicState.topics)}
+
       <View>
       <Appbar.Header
            style={{backgroundColor:'#fff'}}
@@ -168,7 +181,7 @@ const Home = ({getCore,getTopics,coreState,googleSignout,navigation}) => {
         <View>
         <Carousel
               ref={(c) => { setcorosel(c) }}
-              data={MainThemeData}
+              data={coreState.core}
               renderItem={renderItem}
               
               sliderWidth={windowWidth}
@@ -198,15 +211,19 @@ const Home = ({getCore,getTopics,coreState,googleSignout,navigation}) => {
           <View>
           <FlatGrid
       itemDimension={130}
-      data={items}
+      data={topicState.topics}
       style={styles.gridView}
       // staticDimension={300}
       // fixed
       spacing={10}
       renderItem={({ item }) => (
-        <View style={[styles.itemContainer, { backgroundColor: item.code }]}>
-          <Text style={styles.itemName}>{item.name}</Text>
-          <Text style={styles.itemCode}>{item.code}</Text>
+        <View style={[styles.itemContainer, { backgroundColor: item.color }]}>
+          <Image
+              source={{uri:item.logo}}
+              style={{height:90,width:90,alignSelf:'center',justifyContent:'center'}}
+          />  
+          <Text style={styles.itemName}>{item.title}</Text>
+         
         </View>
       )}
     />
@@ -229,14 +246,16 @@ const mapDispatchToProps = {
 }
 
 const mapStateToProps = (state) => ({
-  coreState: state.core
+  coreState: state.core,
+  topicState: state.topics
 })
 
 Home.propTypes = ({
   googleSignout: propTypes.func.isRequired,
   getCore: propTypes.func.isRequired,
   getTopics: propTypes.func.isRequired,
-  coreState: propTypes.object.isRequired
+  coreState: propTypes.object.isRequired,
+  topicState: propTypes.object.isRequired
 })
 
 const styles = StyleSheet.create({
