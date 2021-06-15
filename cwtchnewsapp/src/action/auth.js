@@ -19,7 +19,7 @@ export const googleSignIn = () => async(dispatch) => {
     try {
         await GoogleSignin.hasPlayServices();
         const userInfo = await GoogleSignin.signIn();
-        console.log("Yes", userInfo);
+        // console.log("Yes", userInfo);
 
         const googleCredential = firebase.auth.GoogleAuthProvider.credential(userInfo.idToken);
         firebase.auth().signInWithCredential(googleCredential).then(user => {
@@ -63,7 +63,7 @@ export const googleSignIn = () => async(dispatch) => {
 }
 
 export const googleSignout = () => async(dispatch) => {
-    console.log("Logout clicked")
+    // console.log("Logout clicked")
     try {
         GoogleSignin.revokeAccess();
         GoogleSignin.signOut();
@@ -83,10 +83,10 @@ export const googleSignout = () => async(dispatch) => {
 }
 
 export const phoneSignIn = (data) => async(dispatch) => {
-    console.log("Ho yes");
+    // console.log("Ho yes");
 
     const { phone } = data;
-    console.log("Data -> ", data);
+    // console.log("Data -> ", data);
 
 
     try {
@@ -108,7 +108,7 @@ export const phoneSignIn = (data) => async(dispatch) => {
 
 export const verifyPhone = (data) => async(dispatch) => {
     const { code, confirm } = data;
-    console.log('Code : ', data)
+    // console.log('Code : ', data)
     try {
         const verifyed = confirm.confirm(code);
         console.log(verifyed)
@@ -125,8 +125,8 @@ export const verifyPhone = (data) => async(dispatch) => {
 }
 
 export const signUp = (data) => async(dispatch) => {
-    console.log(data)
-        // const { name, instaUserName, bio, email, password, country, image } = data;
+    // console.log(data)
+    // const { name, instaUserName, bio, email, password, country, image } = data;
 
     // auth().createUserWithEmailAndPassword(email, password)
     //     .then((data) => {

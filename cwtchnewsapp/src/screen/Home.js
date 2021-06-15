@@ -3,6 +3,9 @@ import { connect} from 'react-redux'
 import { Appbar,Searchbar,Subheading   } from 'react-native-paper';
 import propTypes from 'prop-types'
 import Carousel from 'react-native-snap-carousel';
+import { getCore } from '../action/core';
+import { getTopics } from '../action/topics';
+import Splash from './SplashScreen/Splash';
 import { SectionGrid,FlatGrid } from 'react-native-super-grid';
 import {
   SafeAreaView,
@@ -32,7 +35,7 @@ const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 
-const Home = ({googleSignout,navigation}) => {
+const Home = ({getCore,getTopics,coreState,googleSignout,navigation}) => {
 
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -99,6 +102,18 @@ const Home = ({googleSignout,navigation}) => {
       //   }
       // };
 
+
+
+      const [allCore, setallCore] = useState([]);
+      const [allTopics, setallTopics] = useState([]);
+
+
+
+      useEffect(() => {
+          getCore()
+      }, [])
+
+
       
       const renderItem = ({item, index}) => {
         return (
@@ -118,8 +133,13 @@ const Home = ({googleSignout,navigation}) => {
       )
     }
 
+    if(coreState.loading){
+      return <Splash/>
+  }
+
     return(
       <>
+      {console.log(coreState.core)}
       <View>
       <Appbar.Header
            style={{backgroundColor:'#fff'}}
@@ -203,11 +223,20 @@ const Home = ({googleSignout,navigation}) => {
 
 
 const mapDispatchToProps = {
-  googleSignout
+  googleSignout,
+  getCore,
+  getTopics
 }
 
+const mapStateToProps = (state) => ({
+  coreState: state.core
+})
+
 Home.propTypes = ({
-  googleSignout: propTypes.func.isRequired
+  googleSignout: propTypes.func.isRequired,
+  getCore: propTypes.func.isRequired,
+  getTopics: propTypes.func.isRequired,
+  coreState: propTypes.object.isRequired
 })
 
 const styles = StyleSheet.create({
@@ -235,4 +264,4 @@ const styles = StyleSheet.create({
 
 
 
-export default connect(null, mapDispatchToProps)(Home);
+export default connect(mapStateToProps , mapDispatchToProps)(Home);
