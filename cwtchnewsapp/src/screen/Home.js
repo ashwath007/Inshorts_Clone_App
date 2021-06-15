@@ -59,12 +59,12 @@ const Home = ({getCore,getTopics,topicState,coreState,googleSignout,navigation})
       ];
 
       const MainCategoryData = [
-        {id:1,icon:'feed',topic:'MY FEED'},
-        {id:2,icon:'globe',topic:'ALL NEWS'},
-        {id:3,icon:'bar-chart',topic:'TOP STORIES'},
-        {id:4,icon:'magic',topic:'TRENDING'},
-        {id:5,icon:'bookmark',topic:'BOOKMARKS'},
-        {id:6,icon:'bars',topic:'UNREAD'},
+        {id:1,icon:'feed',topic:'My Feed'},
+        {id:2,icon:'globe',topic:'All News'},
+        {id:3,icon:'bar-chart',topic:'Top Stories'},
+        {id:4,icon:'magic',topic:'Trending'},
+        {id:5,icon:'bookmark',topic:'Bookmarks'},
+        {id:6,icon:'bars',topic:'Unreal'},
 
 
       ];
@@ -105,7 +105,7 @@ const Home = ({getCore,getTopics,topicState,coreState,googleSignout,navigation})
           }
           
           )}}>
-            {console.log(item.title)}
+            {/* {console.log(item.title)} */}
    <View key={index} style={{height:100,width:190,backgroundColor:item.color,borderRadius:5}}>
                   <Image
               source={{uri:item.logo}}
@@ -119,7 +119,15 @@ const Home = ({getCore,getTopics,topicState,coreState,googleSignout,navigation})
     }
 
     const renderCategory = ({item, index}) => {
+      // console.log("Cate: ",item.topic);
       return(
+        <TouchableOpacity onPress={() => {navigation.navigate("HomeNews"
+        , {
+          newstopics: item.topic,
+          placehome: 'cate'
+        }
+        
+        )}}>
         <View style={{height:100, width:100, backgroundColor:'white',marginRight:20,borderRadius:8}}>
               <Icon
               style={{alignSelf:'center',fontSize:30,justifyContent:'center',padding:10}}
@@ -133,6 +141,7 @@ const Home = ({getCore,getTopics,topicState,coreState,googleSignout,navigation})
                 {item.topic}
               </Text>
         </View>
+      </TouchableOpacity>
       )
     }
 
@@ -218,6 +227,13 @@ const Home = ({getCore,getTopics,topicState,coreState,googleSignout,navigation})
       // fixed
       spacing={10}
       renderItem={({ item }) => (
+        <TouchableOpacity onPress={() => {navigation.navigate("HomeNews"
+        , {
+          newstopics: item.title,
+          placehome: 'sugg'
+        }
+        
+        )}}>
         <View style={[styles.itemContainer, { backgroundColor: item.color }]}>
           <Image
               source={{uri:item.logo}}
@@ -226,6 +242,7 @@ const Home = ({getCore,getTopics,topicState,coreState,googleSignout,navigation})
           <Text style={styles.itemName}>{item.title}</Text>
          
         </View>
+        </TouchableOpacity>
       )}
     />
             </View>

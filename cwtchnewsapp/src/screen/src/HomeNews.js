@@ -90,8 +90,9 @@ const HomeNews = ({route,navigation}) => {
               break;
 
               case 'cate':
+                // console.log("Cate: ",newstopics);
                 var newRef = database().ref(`/news/`);
-                newRef.orderByChild("category").equalTo(newstopics).once('value').then((snapshot) => {
+                newRef.orderByChild("category").equalTo(`${newstopics}`).once('value').then((snapshot) => {
                     const value = Object.values(snapshot.val());
                     if(value){
                       setnewsOn(value)
